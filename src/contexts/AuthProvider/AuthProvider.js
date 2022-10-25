@@ -1,50 +1,70 @@
 import React, { createContext, useEffect, useState } from "react";
-import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithPopup, signOut} from 'firebase/auth';
-import app from '../../firebase/firebase.config';
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
+import app from "../../firebase/firebase.config";
 
 export const AuthContext = createContext();
-const auth = getAuth(app)
+const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true)
 
-
-  useEffect( () => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) =>{
-      console.log('user inside state changed', currentUser);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log("user inside state changed", currentUser);
       setUser(currentUser);
     });
 
     return () => {
       unsubscribe();
-    }
-
-
-  }, [])
-
-
+    };
+  }, []);
 
   /* Google Sign In  */
   const providerGoogleSignIn = (provider) => {
     return signInWithPopup(auth, provider);
-  }
+  };
 
   /* GitHub Sign In */
   const providerGithubSignIn = (provider) => {
-    return signInWithPopup(auth, provider)
-  }
+    return signInWithPopup(auth, provider);
+  };
 
   /* Sign Out */
   const providerSignOut = () => {
     return signOut(auth);
-  }
+  };
 
-  /* Sign In with Email & Password */
-  const providerCreateUser = () => {
-    return createUserWithEmailAndPassword(auth, email, password)
-  }
+  /* Register with Email & Password */
+  const providerCreateUser = (email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+  const updateUserProfile = (profile) => {
+    return updateProfile(auth.currentUser, profile);
+  };
+  /* Log In with Email Password */
+  const signIn = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+}
 
-  const authInfo = { user, providerGoogleSignIn, providerGithubSignIn, providerSignOut };
+  const authInfo = {
+    user,
+    providerGoogleSignIn,
+    providerGithubSignIn,
+    providerCreateUser,
+    providerSignOut,
+    updateUserProfile,
+    signIn,
+  };
 
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

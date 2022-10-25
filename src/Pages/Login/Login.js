@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import logo from "../../logo.png";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 
 const Login = () => {
-  const { providerGoogleSignIn, providerGithubSignIn, providerSignOut } =
+  const [error, setError] = useState('');
+  const { providerGoogleSignIn, providerGithubSignIn, signIn, setLoading} =
     useContext(AuthContext);
 
   const googleProvider = new GoogleAuthProvider();
@@ -29,7 +30,28 @@ const Login = () => {
     })
     .catch((error) => console.error(error));
   }
+  /* Log In with email password */
+  const handleSubmit = event => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
 
+    signIn(email, password)
+        .then(result => {
+            const user = result.user;
+            console.log(user);
+            form.reset();
+            setError('');
+        })
+        .catch(error => {
+            console.error(error)
+            setError(error.message);
+        })
+        .finally(() => {
+            setLoading(false);
+        })
+}
   
 
   return (
@@ -89,13 +111,15 @@ const Login = () => {
                 </div>
               </div>
 
-              <div className="mx-auto max-w-xs">
+              <form onSubmit={handleSubmit} className="mx-auto max-w-xs">
                 <input
+                name="email"
                   className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                   type="email"
                   placeholder="Email"
                 />
                 <input
+                name="password"
                   className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                   type="password"
                   placeholder="Password"
@@ -124,7 +148,7 @@ const Login = () => {
                     Sign Up
                   </Link>
                 </p>
-              </div>
+              </form>
             </div>
           </div>
         </div>

@@ -5,7 +5,7 @@ import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 import { GoogleAuthProvider } from "firebase/auth";
 
 const SignUp = () => {
-  const { providerGoogleSignIn } = useContext(AuthContext);
+  const { providerGoogleSignIn, providerCreateUser, updateUserProfile } = useContext(AuthContext);
 
   const googleProvider = new GoogleAuthProvider();
 
@@ -17,6 +17,36 @@ const SignUp = () => {
       })
       .catch((error) => console.error(error));
   };
+  /* Create user with Email Password , Name & Photo URL */
+  const handleSignUpUSer = (event) => {
+    event.preventDefault();
+    
+    const form = event.target;
+    const name = form.name.value;
+    const photoURL = form.photoURL.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(name, photoURL, email, password );
+    
+    providerCreateUser(email, password)
+    .then(result => {
+      const user = result.user;
+      console.log(user);
+      handleUpdateUserProfile(name, photoURL);
+      form.reset();
+    })
+    .catch(error => console.error(error));
+  }
+  const handleUpdateUserProfile = (name, photoURL) => {
+    const profile = {
+        displayName: name,
+        photoURL: photoURL
+    }
+
+    updateUserProfile(profile)
+        .then(() => { })
+        .catch(error => console.error(error));
+}
 
   return (
     <div className="min-h-screen hero bg-base-200 text-gray-900 flex justify-center">
@@ -77,7 +107,7 @@ const SignUp = () => {
                 </div>
               </div>
 
-              <div className="mx-auto max-w-xs">
+              <form onSubmit={handleSignUpUSer} className="mx-auto max-w-xs">
                 <input
                   name="name"
                   className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
@@ -145,7 +175,7 @@ const SignUp = () => {
                   </svg>
                   <span className="ml-3">Sign Up</span>
                 </button>
-              </div>
+              </form>
             </div>
           </div>
         </div>
