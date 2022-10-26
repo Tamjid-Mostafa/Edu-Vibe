@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import forgetImage from "../../assets/images/forget.png"
 
 const ForgotPassword = () => {
   return (
@@ -15,7 +16,9 @@ const ForgotPassword = () => {
               <div
                 className="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"
                 
-              ></div>
+              >
+                <img className="w-full rounded-l-lg" src={forgetImage} alt="" />
+              </div>
               {/* <!-- Col --> */}
               <div className="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">
                 <div className="px-8 mb-4 text-center">
@@ -58,11 +61,12 @@ const ForgotPassword = () => {
                     </Link>
                   </div>
                   <div className="text-center">
+                  <span>Already have an account?</span> 
                     <Link
-                      className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
+                      className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800 ml-2"
                       to="/login"
                     >
-                      Already have an account? Login!
+                      Login!
                     </Link>
                   </div>
                 </form>

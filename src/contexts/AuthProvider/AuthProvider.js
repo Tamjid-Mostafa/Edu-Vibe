@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
+  sendEmailVerification,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -55,15 +56,23 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
 }
+/* Email Verification */
+const verifyEmail = () =>{
+  return sendEmailVerification(auth.currentUser);
+}
 
   const authInfo = {
     user,
+    loading, 
+    setLoading,
     providerGoogleSignIn,
     providerGithubSignIn,
     providerCreateUser,
     providerSignOut,
     updateUserProfile,
     signIn,
+    verifyEmail,
+    
   };
 
   return (

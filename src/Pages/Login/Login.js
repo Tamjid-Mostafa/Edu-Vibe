@@ -1,13 +1,17 @@
 import React, { useContext, useState } from "react";
 import logo from "../../logo.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
+import toast from "react-hot-toast";
 
 const Login = () => {
-  const [error, setError] = useState('');
-  const { providerGoogleSignIn, providerGithubSignIn, signIn, setLoading} =
+  const [error, setError] = useState("");
+  const { providerGoogleSignIn, providerGithubSignIn, signIn, setLoading } =
     useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
@@ -24,35 +28,41 @@ const Login = () => {
   /* Handle Github Sign In */
   const handleGithubSignIN = () => {
     providerGithubSignIn(githubProvider)
-    .then((result) => {
-      const user = result.user;
-      console.log(user);
-    })
-    .catch((error) => console.error(error));
-  }
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((error) => console.error(error));
+  };
   /* Log In with email password */
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
 
     signIn(email, password)
-        .then(result => {
-            const user = result.user;
-            console.log(user);
-            form.reset();
-            setError('');
-        })
-        .catch(error => {
-            console.error(error)
-            setError(error.message);
-        })
-        .finally(() => {
-            setLoading(false);
-        })
-}
-  
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        form.reset();
+        setError("");
+        if (user.emailVerified) {
+          navigate(from, { replace: true });
+        } else {
+          toast.error(
+            "Email is not verified. Please check Inbox & verify"
+          );
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        setError(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   return (
     <div className="min-h-screen hero bg-base-200 text-gray-900 flex justify-center ">
@@ -92,7 +102,10 @@ const Login = () => {
                   <span className="ml-4">Log In with Google</span>
                 </button>
 
-                <button onClick={handleGithubSignIN} className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5">
+                <button
+                  onClick={handleGithubSignIN}
+                  className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5"
+                >
                   <div className="bg-white p-1 rounded-full">
                     <svg className="w-6" viewBox="0 0 32 32">
                       <path
@@ -113,17 +126,26 @@ const Login = () => {
 
               <form onSubmit={handleSubmit} className="mx-auto max-w-xs">
                 <input
-                name="email"
+                  name="email"
                   className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                   type="email"
                   placeholder="Email"
                 />
                 <input
-                name="password"
+                  name="password"
                   className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                   type="password"
                   placeholder="Password"
                 />
+                <p className="mt-6 text-xs text-gray-600 text-left">
+                  Forget
+                  <Link
+                    to="/forgotpassword"
+                    className="border-b border-gray-500 border-dotted px-1"
+                  >
+                    password
+                  </Link>
+                </p>
                 <button className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                   <svg
                     className="w-6 h-6 -ml-2"

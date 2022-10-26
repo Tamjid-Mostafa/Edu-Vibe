@@ -1,11 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import logo from "../../logo.png";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 import { GoogleAuthProvider } from "firebase/auth";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
-  const { providerGoogleSignIn, providerCreateUser, updateUserProfile } = useContext(AuthContext);
+  const [error, setError] = useState("");
+  const {
+    providerGoogleSignIn,
+    providerCreateUser,
+    updateUserProfile,
+    verifyEmail,
+  } = useContext(AuthContext);
 
   const googleProvider = new GoogleAuthProvider();
 
@@ -20,33 +27,50 @@ const SignUp = () => {
   /* Create user with Email Password , Name & Photo URL */
   const handleSignUpUSer = (event) => {
     event.preventDefault();
-    
+
     const form = event.target;
     const name = form.name.value;
     const photoURL = form.photoURL.value;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(name, photoURL, email, password );
+    console.log(name, photoURL, email, password);
+
     
+
     providerCreateUser(email, password)
-    .then(result => {
-      const user = result.user;
-      console.log(user);
-      handleUpdateUserProfile(name, photoURL);
-      form.reset();
-    })
-    .catch(error => console.error(error));
-  }
+      .then((result) => {
+        const user = result.user;
+        setError("");
+        handleUpdateUserProfile(name, photoURL);
+        form.reset();
+        handleEmailVerification();
+
+        toast.success("Please verify your email address.");
+      })
+      .catch((error) => {
+        console.error(error);
+        setError(error.message);
+      });
+  };
+  /*---------------------Email Verification------------------- */
+
+  const handleEmailVerification = () => {
+    verifyEmail()
+      .then(() => {})
+      .catch((error) => console.error(error));
+  };
+
+  /*---------------------Update User Profile------------------- */
   const handleUpdateUserProfile = (name, photoURL) => {
     const profile = {
-        displayName: name,
-        photoURL: photoURL
-    }
+      displayName: name,
+      photoURL: photoURL,
+    };
 
     updateUserProfile(profile)
-        .then(() => { })
-        .catch(error => console.error(error));
-}
+      .then(() => {})
+      .catch((error) => console.error(error));
+  };
 
   return (
     <div className="min-h-screen hero bg-base-200 text-gray-900 flex justify-center">

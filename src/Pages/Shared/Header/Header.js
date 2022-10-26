@@ -36,7 +36,7 @@ const Header = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-64"
+              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-60"
             >
               <li>
                 <Link to="/courses">Courses</Link>
@@ -47,22 +47,28 @@ const Header = () => {
               <li>
                 <Link to="/contact">Contact</Link>
               </li>
-              <li>
-                <Link to="/login" className="btn">
-                  Log In
-                </Link>
-              </li>
-              <li>
+              {user?.uid ? (
+                <li>
+                  <Link onClick={handleSignOut}>Log Out</Link>
+                </li>
+              ) : (
+                <>
+                <li>
+                  <Link to="/login">Log In</Link>
+                </li>
+                <li>
                 <Link to="/signup">Sign Up</Link>
               </li>
+              </>
+              )}
             </ul>
           </div>
           <Link
             to="/"
-            className="normal-case text-xl flex flex-rows items-center "
+            className="normal-case text-2xl flex flex-rows items-center font-bold "
           >
             <img src={logo} className="mr-3 h-6 sm:h-9" alt="EduVibe Logo" />
-            Edu<span className="text-rose-400 px-1">Vibe</span>
+            Edu<span className="text-red-500 px-1 ">Vibe</span>
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -88,13 +94,13 @@ const Header = () => {
           {user?.uid ? (
             <Link
               onClick={handleSignOut}
-              className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md "
+              className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md bg-red-500 text-white"
             >
               Log Out
             </Link>
           ) : (
             <Link
-              className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md "
+              className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md bg-red-500 border-none text-white"
               to="/login"
             >
               Log In
@@ -106,9 +112,11 @@ const Header = () => {
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                   <div className="rounded-full">
-                    {
-                      user?.photoURL ? <img src={user?.photoURL} /> : <FaUser className=" rounded-full flex items-center"/>
-                    }
+                    {user?.photoURL ? (
+                      <img src={user?.photoURL} />
+                    ) : (
+                      <FaUser className=" rounded-full flex items-center" />
+                    )}
                   </div>
                 </label>
                 <ul
