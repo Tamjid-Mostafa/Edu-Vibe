@@ -2,53 +2,59 @@ import { Link, useLoaderData } from "react-router-dom";
 import Slider from "react-slick/lib/slider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Sidebar from "../Shared/Sidebar/Sidebar";
 
 const Courses = () => {
   const coursesList = useLoaderData();
   console.log(coursesList);
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    pauseOnHover: true,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
+  // const settings = {
+  //   dots: true,
+  //   infinite: true,
+  //   slidesToShow: 3,
+  //   slidesToScroll: 1,
+  //   autoplay: true,
+  //   autoplaySpeed: 3000,
+  //   pauseOnHover: true,
+  //   responsive: [
+  //     {
+  //       breakpoint: 1024,
+  //       settings: {
+  //         slidesToShow: 3,
+  //         slidesToScroll: 3,
+  //         infinite: true,
+  //         dots: true,
+  //       },
+  //     },
+  //     {
+  //       breakpoint: 600,
+  //       settings: {
+  //         slidesToShow: 2,
+  //         slidesToScroll: 2,
+  //         initialSlide: 2,
+  //       },
+  //     },
+  //     {
+  //       breakpoint: 480,
+  //       settings: {
+  //         slidesToShow: 1,
+  //         slidesToScroll: 1,
+  //       },
+  //     },
+  //   ],
+  // };
 
   return (
-    <div className="">
-      <Slider {...settings}>
+    <div className="flex gap-5">
+      <Sidebar></Sidebar>
+          
+      <div className="shrink grid cols-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-2">
+        
+      
+      
         {coursesList.map((course) => (
           <div key={course.id}>
-            <div className="w-3/4 bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 border-2 border-gray-600 overflow-hidden">
+            <div className="bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 border-2 border-gray-600 overflow-hidden">
               <Link to="/course/:id">
                 <img
                   className="rounded-t-lg transform transition duration-500 hover:scale-110 overflow-auto"
@@ -150,7 +156,7 @@ const Courses = () => {
             </div>
           </div>
         ))}
-      </Slider>
+      </div>
     </div>
   );
 };
