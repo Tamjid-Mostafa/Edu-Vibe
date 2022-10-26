@@ -50,9 +50,7 @@ const Login = () => {
         if (user.emailVerified) {
           navigate(from, { replace: true });
         } else {
-          toast.error(
-            "Email is not verified. Please check Inbox & verify"
-          );
+          toast.error("Email is not verified. Please check Inbox & verify");
         }
       })
       .catch((error) => {
@@ -145,6 +143,9 @@ const Login = () => {
                   >
                     password
                   </Link>
+                </p>
+                <p className="mt-6 text-xs text-red-600 text-center">
+                  {error.slice(22, -2)}
                 </p>
                 <button className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                   <svg

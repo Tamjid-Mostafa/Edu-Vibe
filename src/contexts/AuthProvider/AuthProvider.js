@@ -4,6 +4,7 @@ import {
   getAuth,
   onAuthStateChanged,
   sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -20,14 +21,19 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("user inside state changed", currentUser);
-      setUser(currentUser);
+        console.log('inside auth state change', currentUser);
+
+        if(currentUser === null || currentUser.emailVerified){
+            setUser(currentUser);
+        }
+        setLoading(false);
     });
 
     return () => {
-      unsubscribe();
-    };
-  }, []);
+        unsubscribe();
+    }
+
+}, []);
 
   /* Google Sign In  */
   const providerGoogleSignIn = (provider) => {
@@ -61,6 +67,11 @@ const verifyEmail = () =>{
   return sendEmailVerification(auth.currentUser);
 }
 
+/* Forgot Password */
+const providerForgotPassword = (email) => {
+  return sendPasswordResetEmail(auth, email);
+};
+
   const authInfo = {
     user,
     loading, 
@@ -72,6 +83,7 @@ const verifyEmail = () =>{
     updateUserProfile,
     signIn,
     verifyEmail,
+    providerForgotPassword,
     
   };
 

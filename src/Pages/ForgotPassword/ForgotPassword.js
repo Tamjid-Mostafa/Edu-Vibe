@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import forgetImage from "../../assets/images/forget.png"
+import forgetImage from "../../assets/images/forget.png";
+import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 
 const ForgotPassword = () => {
+  const {providerForgotPassword} = useContext(AuthContext);
+  const handleEmailBlur = (event) => {
+    event.preventDefault();
+    const email = event.target.value;
+    console.log(email);
+    providerForgotPassword(email)
+      .then(() => {})
+      .catch((error) => console.error(error));
+  };
+
   return (
     <div>
       {/* <!-- component --> */}
@@ -13,10 +24,7 @@ const ForgotPassword = () => {
             {/* <!-- Row --> */}
             <div className="w-full xl:w-3/4 lg:w-11/12 flex">
               {/* <!-- Col --> */}
-              <div
-                className="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"
-                
-              >
+              <div className="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg">
                 <img className="w-full rounded-l-lg" src={forgetImage} alt="" />
               </div>
               {/* <!-- Col --> */}
@@ -28,11 +36,11 @@ const ForgotPassword = () => {
                     below and we'll send you a link to reset your password!
                   </p>
                 </div>
-                <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
+                <form onBlur={handleEmailBlur} className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
                   <div className="mb-4">
                     <label
                       className="block mb-2 text-sm font-bold text-gray-700"
-                      for="email"
+                      htmlFor="email"
                     >
                       Email
                     </label>
@@ -40,6 +48,7 @@ const ForgotPassword = () => {
                       className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                       id="email"
                       type="email"
+                      name="email"
                       placeholder="Enter Email Address..."
                     />
                   </div>
@@ -61,7 +70,7 @@ const ForgotPassword = () => {
                     </Link>
                   </div>
                   <div className="text-center">
-                  <span>Already have an account?</span> 
+                    <span>Already have an account?</span>
                     <Link
                       className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800 ml-2"
                       to="/login"

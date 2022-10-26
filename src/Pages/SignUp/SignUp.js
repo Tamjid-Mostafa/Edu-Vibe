@@ -1,11 +1,16 @@
 import React, { useContext, useState } from "react";
 import logo from "../../logo.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 import { GoogleAuthProvider } from "firebase/auth";
 import toast from "react-hot-toast";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
+
   const [error, setError] = useState("");
   const {
     providerGoogleSignIn,
@@ -44,12 +49,15 @@ const SignUp = () => {
         handleUpdateUserProfile(name, photoURL);
         form.reset();
         handleEmailVerification();
-
-        toast.success("Please verify your email address.");
+        toast.success(
+            "Account Created successfully. Please check your inbox for verify Email"
+          );
+        
       })
       .catch((error) => {
         console.error(error);
         setError(error.message);
+        toast.error((error.message).slice(22, -2));
       });
   };
   /*---------------------Email Verification------------------- */
