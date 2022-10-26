@@ -113,7 +113,10 @@ const Header = () => {
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                   <div className="rounded-full">
                     {user?.photoURL ? (
-                      <img src={user?.photoURL} />
+                      <>
+                      <img data-popover-target="popover-user-profile" className="" src={user?.photoURL} />
+                      <div></div>
+                      </>
                     ) : (
                       <FaUser className=" rounded-full flex items-center" />
                     )}
