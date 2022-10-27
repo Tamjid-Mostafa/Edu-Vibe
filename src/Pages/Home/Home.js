@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <>
+    
       <section className="bg-white dark:bg-gray-900 min-h-screen">
         <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
           <div className="mr-auto place-self-center lg:col-span-7">
@@ -39,23 +40,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* <div
-        className="hero min-h-screen bg-base-200"
-        style={{ backgroundImage: `url()` }}
-      >
-        <div className="hero-content text-center">
-          <div className="max-w-md">
-            <h1 className="text-5xl font-bold">Get the best Tutor at Home</h1>
-            <p className="py-6">
-              Class That Fit Your Busy Life. Help students to reach their
-              potential. Online learning offers teachers an efficient way to
-              deliver lessons to students.
-            </p>
-            <button className="btn btn-primary">Get Started</button>
-          </div>
-        </div>
-      </div> */}
     </>
   );
 };

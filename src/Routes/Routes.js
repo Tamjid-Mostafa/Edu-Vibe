@@ -55,12 +55,12 @@ export const routes = createBrowserRouter([
             {
                 path: '/course/:id',
                 element: <Course></Course>,
-                loader: ({params}) => fetch(`https://edu-vibe-server.vercel.app/${params.id}`)
+                loader: ({params}) => fetch(`https://edu-vibe-server.vercel.app/courses/${params.id}`)
             },
             {
                 path: '/checkout/:id',
                 element: <ProtectedRoute><Checkout></Checkout></ProtectedRoute>,
-                loader: ({params}) => fetch(`https://edu-vibe-server.vercel.app/${params.id}`)
+                loader: ({params}) => fetch(`https://edu-vibe-server.vercel.app/checkout/${params.id}`)
             },
         ]
     }
