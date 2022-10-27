@@ -2,13 +2,23 @@ import React from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
+import Pdf from "react-to-pdf";
+const ref = React.createRef();
+
+
+
 const Course = () => {
   const courseLoad = useLoaderData();
   console.log(courseLoad);
 
   return (
+    <>
+    <Pdf style={{width: 500, height: 500, background: 'red'}} targetRef={ref} filename="code-example.pdf">
+        {({ toPdf }) => <button onClick={toPdf}>Generate Pdf</button>}
+      </Pdf>
     <div className="flex flex-row-reverse  gap-5 container mx-auto">
-      <div className="shrink ">
+      
+      <div ref={ref}  className="shrink ">
         <div className="hero   ">
           <div className="flex-col justify-start p-10">
             <img
@@ -65,6 +75,7 @@ const Course = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

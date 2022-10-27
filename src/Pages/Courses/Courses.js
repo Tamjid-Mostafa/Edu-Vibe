@@ -1,12 +1,15 @@
 import { Link, useLoaderData } from "react-router-dom";
 import Sidebar from "../Shared/Sidebar/Sidebar";
+import React from "react";
 
 const Courses = () => {
   const coursesList = useLoaderData();
-  console.log(coursesList);
 
   return (
+    
+    
     <div className='grid grid-cols-1 md:grid-cols-4 container mx-auto gap-8 md:my-10'>
+      
       <div className='md:col-span-1'>
                 {
                     coursesList.map((course, index) => <Sidebar key={course.id} index={index} course={course}/>)
