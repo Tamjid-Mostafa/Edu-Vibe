@@ -1,60 +1,25 @@
 import { Link, useLoaderData } from "react-router-dom";
-import Slider from "react-slick/lib/slider";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import Sidebar from "../Shared/Sidebar/Sidebar";
 
 const Courses = () => {
   const coursesList = useLoaderData();
   console.log(coursesList);
 
-  // const settings = {
-  //   dots: true,
-  //   infinite: true,
-  //   slidesToShow: 3,
-  //   slidesToScroll: 1,
-  //   autoplay: true,
-  //   autoplaySpeed: 3000,
-  //   pauseOnHover: true,
-  //   responsive: [
-  //     {
-  //       breakpoint: 1024,
-  //       settings: {
-  //         slidesToShow: 3,
-  //         slidesToScroll: 3,
-  //         infinite: true,
-  //         dots: true,
-  //       },
-  //     },
-  //     {
-  //       breakpoint: 600,
-  //       settings: {
-  //         slidesToShow: 2,
-  //         slidesToScroll: 2,
-  //         initialSlide: 2,
-  //       },
-  //     },
-  //     {
-  //       breakpoint: 480,
-  //       settings: {
-  //         slidesToShow: 1,
-  //         slidesToScroll: 1,
-  //       },
-  //     },
-  //   ],
-  // };
-
   return (
     <div className="flex gap-5">
-      <Sidebar></Sidebar>
+      <div>
+        <Sidebar
+        coursesList={coursesList}
+        ></Sidebar>
+      </div>
           
-      <div className="shrink grid cols-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-2">
+      <div className="shrink grid cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-5 ">
         
       
       
         {coursesList.map((course) => (
-          <div key={course.id}>
-            <div className="bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 border-2 border-gray-600 overflow-hidden">
+          <div key={course.id} className="bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 border-2 border-gray-600  overflow-hidden">
+            <>
               <Link to={`/course/${course.id}`}>
                 <img
                   className="rounded-t-lg transform transition duration-500 hover:scale-110 overflow-auto"
@@ -118,8 +83,8 @@ const Courses = () => {
                     {course.rating.number}
                   </span>
                 </div>
-                <div className="p-5">
-                  <Link to={`/course/${course.id}`}>
+                <div className="">
+                  <Link href="#">
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                       {course.title}
                     </h5>
@@ -127,7 +92,7 @@ const Courses = () => {
                   <div className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                   {
                     course.course_details.description.length > 100 ? 
-                    <p>{(course.course_details.description).slice(0, 100) + '...'}</p>
+                    <p>{(course.course_details.description).slice(0, 50) + '...'}</p>
                     :
                     <p>{course.course_details.description}</p>
                   }
@@ -157,7 +122,7 @@ const Courses = () => {
                   </Link>
                 </div>
               </div>
-            </div>
+            </>
           </div>
         ))}
       </div>

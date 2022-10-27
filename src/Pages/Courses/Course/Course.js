@@ -9,7 +9,6 @@ const Course = () => {
 
   return (
     <div className="flex gap-5">
-      <Sidebar></Sidebar>
 
       <div className="shrink ">
         <div className="hero   ">
@@ -19,15 +18,15 @@ const Course = () => {
               className="max-w-full rounded-lg shadow-2xl"
             />
             <div className="grid  grid-cols-1 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-3 items-center max-w-lg  py-5">
-              <div class="flex items-center space-x-4">
+              <div className="flex items-center space-x-4">
                 <img
-                  class="w-10 h-10 rounded-full"
+                  className="w-10 h-10 rounded-full"
                   src={courseLoad.instructor.img}
                   alt=""
                 />
-                <div class="font-medium dark:text-white">
+                <div className="font-medium dark:text-white">
                   <div>{courseLoad.instructor.name}</div>
-                  <span class="text-sm text-gray-500 dark:text-gray-400">
+                  <span className="text-sm text-gray-500 dark:text-gray-400">
                     Course Instructor
                   </span>
                 </div>
@@ -41,9 +40,10 @@ const Course = () => {
               </div>
               <div>({courseLoad.rating.number})</div>
             </div>
-            <h1 className="text-5xl font-bold">Box Office News!</h1>
+            <h1 className="text-5xl font-bold">{courseLoad.title}</h1>
             <p className="py-6">{courseLoad.course_details.description}</p>
-            <button className="btn btn-primary">Get Started</button>
+            <Link to={`/checkout/${courseLoad.id}`} className="btn btn-primary">Get Access</Link>
+
           </div>
         </div>
       </div>
