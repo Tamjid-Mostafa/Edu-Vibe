@@ -1,9 +1,10 @@
-import React from 'react';
+import React from "react";
 
-const Blog = () => {
-    return (
-        <div>
-            <section class="text-gray-700 dark:text-white">
+const FAQ = () => {
+  return (
+    // <!-- component -->
+    <div>
+      <section class="text-gray-700 dark:text-white">
         <div class="container px-5 py-24 mx-auto">
           <div class="text-center mb-20">
             <h1 class="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
@@ -77,8 +78,8 @@ const Blog = () => {
           </div>
         </div>
       </section>
-        </div>
-    );
+    </div>
+  );
 };
 
-export default Blog;
+export default FAQ;

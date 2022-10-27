@@ -6,8 +6,8 @@ const Courses = () => {
   console.log(coursesList);
 
   return (
-    <div className="flex gap-5">
-      <div>
+    <div className="flex gap-5 ">
+      <div className="bg-gray-100 dark:bg-gray-800">
         <Sidebar
         coursesList={coursesList}
         ></Sidebar>

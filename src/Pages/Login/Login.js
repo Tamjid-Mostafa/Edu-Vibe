@@ -21,6 +21,7 @@ const Login = () => {
     providerGoogleSignIn(googleProvider)
       .then((result) => {
         const user = result.user;
+        navigate(from,{replace: true});
       })
       .catch((error) => console.error(error));
   };
@@ -30,7 +31,7 @@ const Login = () => {
     providerGithubSignIn(githubProvider)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        navigate(from,{replace: true});
       })
       .catch((error) => console.error(error));
   };
@@ -44,7 +45,7 @@ const Login = () => {
     signIn(email, password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        navigate(from,{replace: true});
         form.reset();
         setError("");
         if (user.emailVerified) {

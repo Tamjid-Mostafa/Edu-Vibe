@@ -8,7 +8,7 @@ const Sidebar = ({coursesList}) => {
     
     return (
       <div
-          className={`flex-none rounded-t-lg max-h-screen ${
+          className={`flex-none rounded-t-lg max-h-screen bg-rose-300 dark:bg-gray-800 ${
             open ? "w-72" : "w-20 "
           } bg-white h-screen p-5  pt-8 relative duration-300`}
         >
