@@ -1,12 +1,12 @@
 A React App for Online Learning Platform.
 
-EDUVIBE
+# EDUVIBE
 
 Site: https://edu-vibe.web.app
 
 About this site;
 
-# Getting Started with Create React App
+## Getting Started with Create React App
 
 This project was build with Tailwind CSS, React.JS.
 Component Library was Daisy Ui.
