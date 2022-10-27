@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
 import Blog from "../Pages/Blog/Blog";
 import Checkout from "../Pages/Checkout/Checkout";
+import Contact from "../Pages/Contact/Contact";
 import Course from "../Pages/Courses/Course/Course";
 import Courses from "../Pages/Courses/Courses";
 import Error from "../Pages/Error/Error";
@@ -37,7 +38,7 @@ export const routes = createBrowserRouter([
             {
                 path: '/courses',
                 element: <Courses></Courses>,
-                loader: () => fetch("http://localhost:5000/courses")
+                loader: () => fetch("https://edu-vibe-server.vercel.app/courses")
             },
             {
                 path: '/blog',
@@ -48,14 +49,18 @@ export const routes = createBrowserRouter([
                 element: <FAQ></FAQ>
             },
             {
+                path: '/contact',
+                element: <Contact></Contact>
+            },
+            {
                 path: '/course/:id',
                 element: <Course></Course>,
-                loader: ({params}) => fetch(`http://localhost:5000/courses/${params.id}`)
+                loader: ({params}) => fetch(`https://edu-vibe-server.vercel.app/${params.id}`)
             },
             {
                 path: '/checkout/:id',
                 element: <ProtectedRoute><Checkout></Checkout></ProtectedRoute>,
-                loader: ({params}) => fetch(`http://localhost:5000/checkout/${params.id}`)
+                loader: ({params}) => fetch(`https://edu-vibe-server.vercel.app/${params.id}`)
             },
         ]
     }

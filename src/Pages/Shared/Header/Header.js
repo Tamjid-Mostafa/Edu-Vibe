@@ -96,7 +96,7 @@ const Header = () => {
           {user?.uid ? (
             <Link
               onClick={handleSignOut}
-              className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md bg-rose-500 text-white"
+              className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md bg-rose-500 text-white   shadow-lg hover:bg-gray-800 transform transition duration-500 hover:scale-110 hover:shadow-lg focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
             >
               Log Out
             </Link>
