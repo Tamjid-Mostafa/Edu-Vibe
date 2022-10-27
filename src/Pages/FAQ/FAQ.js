@@ -4,9 +4,9 @@ const FAQ = () => {
   return (
     // <!-- component -->
     <>
-      <section className="text-gray-800 dark:text-white">
+      <section className="text-gray-800 dark:text-gray-900">
         <div className="container px-5 py-24 mx-auto">
-          <div className="text-center mb-20">
+          <div className="text-center mb-20 dark:text-gray-300">
             <h1 className="sm:text-3xl text-2xl font-medium text-center title-font smb-4">
               Frequently Asked Question
             </h1>
@@ -22,7 +22,7 @@ const FAQ = () => {
                   What is cors?
                 </summary>
 
-                <span>
+                <span className="dark:text-gray-300" >
                   Laboris qui labore cillum culpa in sunt quis sint veniam.
                   Dolore ex aute deserunt esse ipsum elit aliqua. Aute quis
                   minim velit nostrud pariatur culpa magna in aute.
@@ -33,7 +33,7 @@ const FAQ = () => {
                   Why are you using firebase?
                 </summary>
 
-                <span>
+                <span className="dark:text-gray-300" >
                   Laboris qui labore cillum culpa in sunt quis sint veniam.
                   Dolore ex aute deserunt esse ipsum elit aliqua. Aute quis
                   minim velit nostrud pariatur culpa magna in aute.
@@ -44,7 +44,7 @@ const FAQ = () => {
                   How does the private route work?
                 </summary>
 
-                <span>
+                <span className="dark:text-gray-300" >
                   Laboris qui labore cillum culpa in sunt quis sint veniam.
                   Dolore ex aute deserunt esse ipsum elit aliqua. Aute quis
                   minim velit nostrud pariatur culpa magna in aute.
@@ -57,7 +57,7 @@ const FAQ = () => {
                   What is Node?
                 </summary>
 
-                <span className="px-4 py-2">
+                <span className="px-4 py-2 dark:text-gray-300">
                   Laboris qui labore cillum culpa in sunt quis sint veniam.
                   Dolore ex aute deserunt esse ipsum elit aliqua. Aute quis
                   minim velit nostrud pariatur culpa magna in aute.
@@ -68,7 +68,7 @@ const FAQ = () => {
                   How does Node work?
                 </summary>
 
-                <span className="px-4 py-2">
+                <span className="px-4 py-2 dark:text-gray-300">
                   Laboris qui labore cillum culpa in sunt quis sint veniam.
                   Dolore ex aute deserunt esse ipsum elit aliqua. Aute quis
                   minim velit nostrud pariatur culpa magna in aute.

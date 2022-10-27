@@ -6,17 +6,15 @@ const Courses = () => {
   console.log(coursesList);
 
   return (
-    <div className="flex gap-5 ">
-      <div className="bg-gray-100 dark:bg-gray-800">
-        <Sidebar
-        coursesList={coursesList}
-        ></Sidebar>
-      </div>
+    <div className='grid grid-cols-1 md:grid-cols-4 container mx-auto gap-8 md:my-10'>
+      <div className='md:col-span-1'>
+                {
+                    coursesList.map((course, index) => <Sidebar key={course.id} index={index} course={course}/>)
+                }
+            </div>
           
-      <div className="shrink grid cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-5 ">
-        
-      
-      
+          
+      <div className="grid cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-5 max-w-6xl mx-auto md:col-span-3">
         {coursesList.map((course) => (
           <div key={course.id} className="bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 border-2 border-gray-600  overflow-hidden">
             <>
