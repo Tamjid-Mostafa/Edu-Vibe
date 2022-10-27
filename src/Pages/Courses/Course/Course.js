@@ -48,7 +48,7 @@ const Course = () => {
               </div>
               <h1 className="text-5xl font-bold ">{courseLoad.title}</h1>
               <div className="inline-flex  justify-center mt-5 px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-rose-600 shadow-lg hover:bg-gray-800 transform transition duration-500 hover:scale-110 hover:shadow-lg focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
-                <ReactToPdf targetRef={ref} filename="div-blue.pdf" options={options} x={.5} y={.5} scale={0.8}>
+                <ReactToPdf targetRef={ref} filename={courseLoad.title} options={options} x={.5} y={.5} scale={0.8}>
                   {({ toPdf }) => <button onClick={toPdf}>Generate pdf</button>}
                 </ReactToPdf>
               </div>
