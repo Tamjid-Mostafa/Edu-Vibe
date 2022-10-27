@@ -39,7 +39,6 @@ const Header = () => {
               tabIndex={0}
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-60"
             >
-              
               <li>
                 <Link to="/courses">Courses</Link>
               </li>
@@ -115,14 +114,9 @@ const Header = () => {
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                   <div className="rounded-full">
                     {user?.photoURL ? (
-                      <>
-                        <img
-                          data-popover-target="popover-user-profile"
-                          className=""
-                          src={user?.photoURL}
-                        />
-                        <div></div>
-                      </>
+                      <div title={user?.displayName}>
+                        <img src={user?.photoURL}/>
+                      </div>
                     ) : (
                       <FaUser className=" rounded-full flex items-center" />
                     )}
@@ -155,9 +149,8 @@ const Header = () => {
               value=""
               id="checked-toggle"
               className="sr-only peer"
-              
             />
-            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-rose-300 dark:peer-focus:ring-rose-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-rose-500"></div>
           </label>
         </div>
       </div>

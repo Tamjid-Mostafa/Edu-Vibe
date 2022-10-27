@@ -38,7 +38,7 @@ export const routes = createBrowserRouter([
             {
                 path: '/courses',
                 element: <Courses></Courses>,
-                loader: () => fetch("https://edu-vibe-server.vercel.app/courses")
+                loader: () => fetch("https://edu-vibe-server-tamjid-mostafa.vercel.app/courses")
             },
             {
                 path: '/blog',
@@ -55,12 +55,12 @@ export const routes = createBrowserRouter([
             {
                 path: '/course/:id',
                 element: <Course></Course>,
-                loader: ({params}) => fetch(`https://edu-vibe-server.vercel.app/courses/${params.id}`)
+                loader: ({params}) => fetch(`https://edu-vibe-server-tamjid-mostafa.vercel.app/courses/${params.id}`)
             },
             {
                 path: '/checkout/:id',
                 element: <ProtectedRoute><Checkout></Checkout></ProtectedRoute>,
-                loader: ({params}) => fetch(`https://edu-vibe-server.vercel.app/checkout/${params.id}`)
+                loader: ({params}) => fetch(`https://edu-vibe-server-tamjid-mostafa.vercel.app/checkout/${params.id}`)
             },
         ]
     }

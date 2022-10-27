@@ -17,64 +17,66 @@ const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-        console.log('inside auth state change', currentUser);
-
-        if(currentUser === null || currentUser.emailVerified){
-            setUser(currentUser);
-        }
         setLoading(false);
+        setUser(currentUser);
     });
 
     return () => {
-        unsubscribe();
-    }
-
-}, []);
+      unsubscribe();
+    };
+  }, []);
 
   /* Google Sign In  */
   const providerGoogleSignIn = (provider) => {
+    setLoading(true);
     return signInWithPopup(auth, provider);
   };
 
   /* GitHub Sign In */
   const providerGithubSignIn = (provider) => {
+    setLoading(true);
     return signInWithPopup(auth, provider);
   };
 
   /* Sign Out */
   const providerSignOut = () => {
+    setLoading(true);
     return signOut(auth);
   };
 
   /* Register with Email & Password */
   const providerCreateUser = (email, password) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
   const updateUserProfile = (profile) => {
+    setLoading(true);
     return updateProfile(auth.currentUser, profile);
   };
   /* Log In with Email Password */
   const signIn = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
-}
-/* Email Verification */
-const verifyEmail = () =>{
-  return sendEmailVerification(auth.currentUser);
-}
+  };
+  /* Email Verification */
+  const verifyEmail = () => {
+    setLoading(true);
+    return sendEmailVerification(auth.currentUser);
+  };
 
-/* Forgot Password */
-const providerForgotPassword = (email) => {
-  return sendPasswordResetEmail(auth, email);
-};
+  /* Forgot Password */
+  const providerForgotPassword = (email) => {
+    setLoading(true);
+    return sendPasswordResetEmail(auth, email);
+  };
 
   const authInfo = {
     user,
-    loading, 
+    loading,
     setLoading,
     providerGoogleSignIn,
     providerGithubSignIn,
@@ -84,7 +86,6 @@ const providerForgotPassword = (email) => {
     signIn,
     verifyEmail,
     providerForgotPassword,
-    
   };
 
   return (

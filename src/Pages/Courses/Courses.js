@@ -4,6 +4,7 @@ import React from "react";
 
 const Courses = () => {
   const coursesList = useLoaderData();
+  console.log(coursesList);
 
   return (
     
