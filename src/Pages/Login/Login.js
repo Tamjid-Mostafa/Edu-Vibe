@@ -26,15 +26,7 @@ const Login = () => {
       .catch((error) => console.error(error));
   };
 
-  /* Handle Github Sign In */
-  const handleGithubSignIN = () => {
-    providerGithubSignIn(githubProvider)
-      .then((result) => {
-        const user = result.user;
-        navigate(from,{replace: true});
-      })
-      .catch((error) => console.error(error));
-  };
+  
   /* Log In with email password */
   const handleSubmit = (event) => {
     event.preventDefault();

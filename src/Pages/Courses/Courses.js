@@ -26,7 +26,7 @@ const Courses = () => {
                 <img
                   className="rounded-t-lg transform transition duration-500 hover:scale-110 overflow-auto"
                   src={course.image_url}
-                  alt="product image"
+                  alt="product"
                 />
               </Link>
               <div className="px-5 pb-5">

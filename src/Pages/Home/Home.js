@@ -38,7 +38,7 @@ const Home = () => {
             </Link>
           </div>
           <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
-            <img src="https://i.ibb.co/KKWQSpP/reading.png" alt="mockup" />
+            <img src="https://i.ibb.co/r5x2nJ8/reading.png" alt="reading" />
           </div>
         </div>
       </section>
