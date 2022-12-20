@@ -5,14 +5,23 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import AuthProvider from "./contexts/AuthProvider/AuthProvider";
 import { Toaster } from "react-hot-toast";
+import { QueryClient, QueryClientProvider } from 'react-query';
 
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
+ 
+ const queryClient = new QueryClient()
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <Toaster/>
       <App />
     </AuthProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );
 

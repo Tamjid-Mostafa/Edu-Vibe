@@ -7,14 +7,13 @@ import toast from "react-hot-toast";
 
 const Login = () => {
   const [error, setError] = useState("");
-  const { providerGoogleSignIn, providerGithubSignIn, signIn, setLoading } =
+  const { providerGoogleSignIn, signIn, setLoading } =
     useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
   const googleProvider = new GoogleAuthProvider();
-  const githubProvider = new GithubAuthProvider();
 
   /* Handle Google Sign In */
   const handleGoogleSignIn = () => {
@@ -60,7 +59,7 @@ const Login = () => {
       <div className="max-w-screen-xl m-0 sm:m-20 bg-white  shadow sm:rounded-lg flex justify-center flex-1">
         <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
           <div>
-            <img src={logo} className="w-32 mx-auto" />
+            <img src={logo} alt="" className="w-32 mx-auto" />
           </div>
           <div className="mt-12 flex flex-col items-center">
             <h1 className="text-2xl xl:text-3xl font-extrabold">Log In</h1>
@@ -94,7 +93,6 @@ const Login = () => {
                 </button>
 
                 <button
-                  onClick={handleGithubSignIN}
                   className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5"
                 >
                   <div className="bg-white p-1 rounded-full">

@@ -1,11 +1,10 @@
 
 import { RouterProvider } from 'react-router-dom';
-import './App.css';
 import { routes } from './Routes/Routes';
 
 function App() {
   return (
-    <div className="mx-auto" >
+    <div className="bg-gray-100 dark:bg-gray-900 min-h-screen" >
       <RouterProvider router={routes}></RouterProvider>
     </div>
   );

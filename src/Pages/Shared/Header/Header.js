@@ -1,9 +1,10 @@
+import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaUser } from "react-icons/fa";
+import { FaDesktop, FaMoon, FaSun, FaUser } from "react-icons/fa";
 import logo from "../../../logo.png";
 import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
-import Home from "../../Home/Home";
+import { useEffect } from "react";
 
 const Header = () => {
   const { user, providerSignOut } = useContext(AuthContext);
@@ -14,147 +15,209 @@ const Header = () => {
       .catch((error) => console.error(error));
   };
 
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "system"
+  );
+  const element = document.documentElement;
+
+  const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+  const options = [
+    {
+      icon: <FaSun/>,
+      text: "light",
+    },
+    {
+      icon: <FaMoon/>,
+      text: "dark",
+    },
+    {
+      icon: <FaDesktop/>,
+      text: "system",
+    },
+  ];
+
+  function onWindowMatch() {
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) && darkQuery.matches)
+    ) {
+      element.classList.add("dark");
+    } else {
+      element.classList.remove("dark");
+    }
+  }
+  onWindowMatch();
+
+  useEffect(() => {
+    switch (theme) {
+      case "dark":
+        element.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+
+        break;
+      case "light":
+        element.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+
+        break;
+      default:
+        localStorage.removeItem("theme");
+        onWindowMatch();
+        break;
+    }
+  }, [theme]);
+
+  darkQuery.addEventListener("change", (e) => {
+    if (!("theme" in localStorage)) {
+      if (e.matches) {
+        element.classList.add("dark");
+      } else {
+        element.classList.remove("dark");
+      }
+    }
+  });
+
+  const HTML = document.querySelector("html").getAttribute("class");
+
+  const [fix, setFix] = useState(false);
+
+  useEffect(() => {
+    const fixedHeader = () => {
+      if (window.scrollY >= 392) {
+        setFix(true);
+      } else {
+        setFix(false);
+      }
+    };
+    window.addEventListener("scroll", fixedHeader);
+    return () => window.removeEventListener("scroll", fixedHeader);
+  }, []);
+
   return (
-    <div className="py-3 ">
-      <div className="navbar container mx-auto bg-base-100 rounded-xl px-5">
-        <div className="navbar-start ">
-          <div className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </label>
-            <ul
-              tabIndex={0}
-              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-60"
-            >
-              <li>
-                <Link to="/courses">Courses</Link>
-              </li>
-              <li>
-                <Link to="/blog">Blog</Link>
-              </li>
-              <li>
-                <Link to="/contact">Contact</Link>
-              </li>
-              <li>
-                <Link to="/faq">FAQ</Link>
-              </li>
-              {user?.uid ? (
-                <li>
-                  <Link onClick={handleSignOut}>Log Out</Link>
-                </li>
-              ) : (
-                <>
-                  <li>
-                    <Link to="/login">Log In</Link>
-                  </li>
-                  <li>
-                    <Link to="/signup">Sign Up</Link>
-                  </li>
-                </>
-              )}
-            </ul>
-          </div>
-          <Link
+    <>
+    
+      <div className="relative ">
+      
+      <Navbar
+        className={`${fix ? "fix z-10 top-0 left-0 right-0" : ""}`}
+        fluid={false}
+        rounded={false}
+      >
+        {/* <div className="absolute w-[50%] inset-0 gradient-01" /> */}
+        <Navbar.Brand>
+          
+        <Link
             to="/"
             className="normal-case text-2xl flex flex-rows items-center font-bold "
           >
             <img src={logo} className="mr-3 h-6 sm:h-9" alt="EduVibe Logo" />
             Edu<span className="text-rose-600 px-1 ">Vibe</span>
           </Link>
-        </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal p-0 ">
-            <li>
-              <Link to="/courses">Courses</Link>
-            </li>
-            <li>
-              <Link to="/blog">Blog</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li>
-            <li>
-              <Link to="/faq">FAQ</Link>
-            </li>
-          </ul>
-        </div>
-        <div className="navbar-end gap-5">
-          {user?.uid ? (
-            <Link
-              onClick={handleSignOut}
-              className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md bg-rose-500 text-white   shadow-lg hover:bg-gray-800 transform transition duration-500 hover:scale-110 hover:shadow-lg focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
-            >
-              Log Out
-            </Link>
-          ) : (
-            <Link
-              className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md bg-rose-500 border-none text-white     shadow-lg hover:bg-gray-800 transform transition duration-500 hover:scale-110 hover:shadow-lg focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
-              to="/login"
-            >
-              Log In
-            </Link>
-          )}
-
-          <>
-            {user?.uid ? (
-              <div className="dropdown dropdown-end">
-                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                  <div className="rounded-full">
-                    {user?.photoURL ? (
-                      <div title={user?.displayName}>
-                        <img src={user?.photoURL}/>
-                      </div>
-                    ) : (
-                      <FaUser className=" rounded-full flex items-center" />
-                    )}
-                  </div>
-                </label>
-                <ul
-                  tabIndex={0}
-                  className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                  <li>
-                    <a className="justify-between">
-                      User Name: {user?.displayName}
-                    </a>
-                  </li>
-                  <li>
-                    <a onClick={handleSignOut}>Logout</a>
-                  </li>
-                </ul>
-              </div>
-            ) : (
-              <FaUser></FaUser>
-            )}
-          </>
-          <label
-            htmlFor="checked-toggle"
-            className="inline-flex relative items-center cursor-pointer"
+        </Navbar.Brand>
+        <div className="flex md:order-2">
+          <Dropdown
+            arrowIcon={false}
+            inline={true}
+            label={
+              user?.uid ? (
+                <Avatar
+                  alt="User settings"
+                  status="online"
+                  img={user?.photoURL}
+                  rounded={true}
+                />
+              ) : (
+                <Avatar rounded={true} />
+              )
+            }
           >
-            <input
-              type="checkbox"
-              value=""
-              id="checked-toggle"
-              className="sr-only peer"
-            />
-            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-rose-300 dark:peer-focus:ring-rose-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-rose-500"></div>
-          </label>
+            
+            <Dropdown.Header>
+              {user?.displayName ? (
+                <span className="block text-sm">{user?.displayName}</span>
+              ) : (
+                <span className="block text-sm">Anonymous</span>
+              )}
+              {user?.email ? (
+                <span className="block truncate text-sm font-medium">
+                  {user?.email}
+                </span>
+              ) : (
+                <span className="block truncate text-sm font-medium">
+                  anonymous@anonymous.com
+                </span>
+              )}
+            </Dropdown.Header>
+            <Dropdown.Item><Link to="/dashboard">Dashboard</Link></Dropdown.Item>
+            <Dropdown.Item>My Sell Post</Dropdown.Item>
+            <Dropdown.Item>My Orders</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item onClick={handleSignOut}>Log Out</Dropdown.Item>
+          </Dropdown>
+          <div className="flex justify-center items-center mx-2">
+          <Dropdown
+          className=""
+            arrowIcon={false}
+            inline={true}
+            label={theme === "light" ? <FaSun/> : <FaMoon/>}
+          >
+            {options?.map((opt, index) => (
+           <Dropdown.Item key={index}> <button
+              key={opt.text}
+              onClick={() => setTheme(opt.text)}
+              className={`text-xl rounded-full m-1 ${
+                theme === opt.text && "text-sky-600"
+              }`}
+            >{opt.icon}
+            </button></Dropdown.Item>
+          ))}
+          </Dropdown>
+          </div>
+          <Navbar.Toggle />
         </div>
-      </div>
+        <Navbar.Collapse>
+          <Navbar.Link>
+          <Link to="/courses">Courses</Link>
+          </Navbar.Link>
+          
+          <Navbar.Link>
+          <Link to="/blog">Blog</Link>
+          </Navbar.Link>
+          <Navbar.Link>
+          <Link to="/contact">Contact</Link>
+          </Navbar.Link>
+          <Navbar.Link>
+          <Link to="/faq">FAQ</Link>
+          </Navbar.Link>
+
+          {user?.uid ? (
+            <>
+              <Navbar.Link>
+                <Link to="/dashboard">Dashboard</Link>
+              </Navbar.Link>
+              <Navbar.Link>
+                <Link to="/blogs">Blogs</Link>
+              </Navbar.Link>
+              <Navbar.Link>
+                <button onClick={handleSignOut}>Log Out</button>
+              </Navbar.Link>
+            </>
+          ) : (
+            <>
+              <Navbar.Link>
+                <Link to="/login">Log In</Link>
+              </Navbar.Link>
+              <Navbar.Link>
+                <Link to="/signup">Sign Up</Link>
+              </Navbar.Link>
+            </>
+          )}
+          
+        </Navbar.Collapse>
+      </Navbar>
     </div>
+    </>
   );
 };
 
